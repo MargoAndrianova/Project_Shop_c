@@ -1,4 +1,8 @@
+//Андріанова Маргарита Юріївна
+//Комп'ютерна математика 2
+
 #include "shop.h"
+#include "shop_test.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +14,13 @@ void mainMenu(Store *store) {
     double price, salary, discount;
     int quantity;
     char role[20];
+
+    // Відкриття файлу для запису результатів
+    FILE *outputFile = fopen("output.txt", "w");
+    if (!outputFile) {
+        perror("Error opening output file");
+        return;
+    }
 
     do {
         printf("\n========= MAIN MENU =========\n");
@@ -67,21 +78,19 @@ void mainMenu(Store *store) {
                 break;
 
             case 4:
-                displayProducts(store);
+                displayProducts(store, outputFile);
                 break;
 
-            case 5:
-                printf("Enter employee name:");
-                fgets(name, sizeof(name), stdin);
-                name[strcspn(name, "\n")] = '\0';
-                printf("Enter salary:");
-                scanf("%lf", &salary);
-                getchar();
-                printf("Enter role:");
-                fgets(role, sizeof(role), stdin);
-                role[strcspn(role, "\n")] = '\0';
-                addEmployee(store, name, salary, role);
+            case 5: {
+                char name[50];
+                float discount;
+                printf("Enter product name: ");
+                scanf("%s", name);
+                printf("Enter discount percentage: ");
+                scanf("%f", &discount);
+                setDiscount(&store, name, discount);
                 break;
+            }
 
             case 6:
                 printf("Enter employee name to update:");
@@ -100,7 +109,7 @@ void mainMenu(Store *store) {
                 break;
 
             case 8:
-                displayEmployees(store);
+                displayEmployees(store, outputFile);
                 break;
 
             case 9:
@@ -215,14 +224,21 @@ void removeProduct(Store *store, const char *name) {
 }
 
 // Відображення продуктів
-void displayProducts(const Store *store) {
-    printf("Products in store:\n");
+void displayProducts(const Store *store, FILE *outputFile) {
+    if (store->productCount == 0) {
+        logToFileAndConsole(outputFile, "No products in store.");
+        return;
+    }
+
+    logToFileAndConsole(outputFile, "Products in store:");
     for (int i = 0; i < store->productCount; i++) {
-        printf("Name: %s, Price: %.2f, Quantity: %d, Discount: %.2f%%\n",
-               store->products[i].name,
-               store->products[i].price,
-               store->products[i].quantity,
-               store->products[i].discount);
+        char buffer[256];
+        snprintf(buffer, sizeof(buffer), "Name: %s, Price: %.2f, Quantity: %d, Discount: %.2f%%",
+                 store->products[i].name,
+                 store->products[i].price,
+                 store->products[i].quantity,
+                 store->products[i].discountPercentage);
+        logToFileAndConsole(outputFile, buffer);
     }
 }
 
@@ -263,14 +279,21 @@ void removeEmployee(Store *store, const char *name) {
 }
 
 // Відображення працівників
-void displayEmployees(const Store *store) {
-    printf("Employees in store:\n");
+void displayEmployees(const Store *store, FILE *outputFile) {
+    if (store->employeeCount == 0) {
+        logToFileAndConsole(outputFile, "No employees in store.");
+        return;
+    }
+
+    logToFileAndConsole(outputFile, "Employees in store:");
     for (int i = 0; i < store->employeeCount; i++) {
-        printf("Name: %s, Salary: %.2f, Role: %s, Total Sales: %.2f\n",
-               store->employees[i].name,
-               store->employees[i].salary,
-               store->employees[i].role,
-               store->employees[i].totalSales);
+        char buffer[256];
+        snprintf(buffer, sizeof(buffer), "Name: %s, Salary: %.2f, Role: %s, Total Sales: %.2f",
+                 store->employees[i].name,
+                 store->employees[i].salary,
+                 store->employees[i].role,
+                 store->employees[i].totalSales);
+        logToFileAndConsole(outputFile, buffer);
     }
 }
 
@@ -289,8 +312,8 @@ void sellProduct(Store *store, const char *productName, int quantity, const char
                 double totalSale = quantity * store->products[i].price;
 
                 // Застосування знижки, якщо вона є
-                if (store->products[i].discount > 0) {
-                    totalSale *= (1 - store->products[i].discount / 100);
+                if (store->products[i].discountPercentage > 0) {
+                    totalSale *= (1 - store->products[i].discountPercentage / 100);
                 }
 
                 store->products[i].quantity -= quantity;
@@ -367,6 +390,8 @@ void restockProduct(Store *store, const char *productName, int quantity) {
     }
     printf("Product not found: %s\n", productName);
 }
+
+
 void autoRestock(Store *store, int restockQuantity) {
     printf("Automatically restocking out-of-stock products...\n");
     int restockedCount = 0;
@@ -389,15 +414,21 @@ void displayProfit(const Store *store) {
     printf("Total profit: %.2f\n", store->totalProfit);
 }
 
-void setDiscount(Store *store, const char *productName, double discountPercentage) {
+void setDiscount(Store *store, const char *productName, float discountPercentage) {
+    if (discountPercentage < 0.0 || discountPercentage > 100.0) {
+        printf("Invalid discount percentage. Must be between 0 and 100.\n");
+        return;
+    }
+
     for (int i = 0; i < store->productCount; i++) {
         if (strcmp(store->products[i].name, productName) == 0) {
-            store->products[i].discount = discountPercentage;
+            store->products[i].discountPercentage = discountPercentage;
+            store->products[i].price *= (1 - discountPercentage / 100.0);
             printf("Discount of %.2f%% set for product: %s\n", discountPercentage, productName);
             return;
         }
     }
-    printf("Product not found: %s\n", productName);
+    printf("Product '%s' not found in store.\n", productName);
 }
 
 void displayOutOfStock(const Store *store) {

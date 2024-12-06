@@ -1,13 +1,18 @@
+//Андріанова Маргарита Юріївна
+//Комп'ютерна математика 2
+
 #ifndef SHOP_H
 #define SHOP_H
+#include <stdio.h>
 
 // Структура товару
 typedef struct {
     char name[50];
-    double price;       // Ціна товару
-    int quantity;       // Кількість у наявності
-    double discount;    // Відсоток знижки
+    float price;
+    int quantity;
+    float discountPercentage;
 } Product;
+
 
 // Структура працівника
 typedef struct {
@@ -28,17 +33,19 @@ typedef struct {
     double totalProfit;
 } Store;
 
+
 // Функції для роботи з продуктами
 void addProduct(Store *store, const char *name, double price, int quantity);
 void updateProduct(Store *store, const char *name, double price, int quantity);
 void removeProduct(Store *store, const char *name);
-void displayProducts(const Store *store);
+void displayProducts(const Store *store, FILE *outputFile);
+
 
 // Функції для роботи з працівниками
 void addEmployee(Store *store, const char *name, double salary, const char *role);
 void updateEmployee(Store *store, const char *name, double newSalary);
 void removeEmployee(Store *store, const char *name);
-void displayEmployees(const Store *store);
+void displayEmployees(const Store *store, FILE *outputFile);
 void calculateEmployeeSalary(Store *store);
 
 // Функції для продажів і прибутку
@@ -53,7 +60,7 @@ void displayOutOfStock(const Store *store);
 void saveToFile(const Store *store, const char *filename);
 void loadFromFile(Store *store, const char *filename);
 
-void setDiscount(Store *store, const char *productName, double discountPercentage);
+void setDiscount(Store *store, const char *productName, float discountPercentage);
 void mainMenu(Store *store);
 
 #endif

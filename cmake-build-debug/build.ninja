@@ -79,6 +79,84 @@ build Project_Shop_c.exe: C_EXECUTABLE_LINKER__Project_Shop_c_Debug CMakeFiles/P
   TARGET_IMPLIB = libProject_Shop_c.dll.a
   TARGET_PDB = Project_Shop_c.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target main
+
+
+#############################################
+# Order-only phony target for main
+
+build cmake_object_order_depends_target_main: phony || .
+
+build CMakeFiles/main.dir/main.c.obj: C_COMPILER__main_unscanned_Debug D$:/Project_Shop_c/main.c || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles\main.dir\main.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\main.dir
+  OBJECT_FILE_DIR = CMakeFiles\main.dir
+
+build CMakeFiles/main.dir/shop.c.obj: C_COMPILER__main_unscanned_Debug D$:/Project_Shop_c/shop.c || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles\main.dir\shop.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\main.dir
+  OBJECT_FILE_DIR = CMakeFiles\main.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main
+
+
+#############################################
+# Link the executable main.exe
+
+build main.exe: C_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.c.obj CMakeFiles/main.dir/shop.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\main.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = main.exe
+  TARGET_IMPLIB = libmain.dll.a
+  TARGET_PDB = main.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test
+
+
+#############################################
+# Order-only phony target for test
+
+build cmake_object_order_depends_target_test: phony || .
+
+build CMakeFiles/test.dir/shop_test.c.obj: C_COMPILER__test_unscanned_Debug D$:/Project_Shop_c/shop_test.c || cmake_object_order_depends_target_test
+  DEP_FILE = CMakeFiles\test.dir\shop_test.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\test.dir
+  OBJECT_FILE_DIR = CMakeFiles\test.dir
+
+build CMakeFiles/test.dir/shop.c.obj: C_COMPILER__test_unscanned_Debug D$:/Project_Shop_c/shop.c || cmake_object_order_depends_target_test
+  DEP_FILE = CMakeFiles\test.dir\shop.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\test.dir
+  OBJECT_FILE_DIR = CMakeFiles\test.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test
+
+
+#############################################
+# Link the executable test.exe
+
+build test.exe: C_EXECUTABLE_LINKER__test_Debug CMakeFiles/test.dir/shop_test.c.obj CMakeFiles/test.dir/shop.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\test.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = test.exe
+  TARGET_IMPLIB = libtest.dll.a
+  TARGET_PDB = test.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -107,6 +185,10 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build Project_Shop_c: phony Project_Shop_c.exe
 
+build main: phony main.exe
+
+build test: phony test.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -115,7 +197,7 @@ build Project_Shop_c: phony Project_Shop_c.exe
 #############################################
 # Folder: D:/Project_Shop_c/cmake-build-debug
 
-build all: phony Project_Shop_c.exe
+build all: phony Project_Shop_c.exe main.exe test.exe
 
 # =============================================================================
 # Built-in targets
