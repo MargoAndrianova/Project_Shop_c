@@ -1,6 +1,5 @@
-ADD_PRODUCT Apple 10.5 100
-ADD_PRODUCT Banana 5.3 200
-ADD_EMPLOYEE John 1500 Manager
-ADD_EMPLOYEE Alice 1200 Seller
-SELL_PRODUCT Apple 20 John
-SELL_PRODUCT Banana 50 Alice
+Product: Laptop, Price: 1500.0, Quantity: 5
+Product: Phone, Price: 800.0, Quantity: 10
+Product: Headphones, Price: 150.0, Quantity: 20
+Employee: Alice, Salary: 3000.0, Role: Manager
+Employee: Bob, Salary: 2000.0, Role: Cashier

@@ -2,16 +2,9 @@
 //Комп'ютерна математика 2
 
 #include "shop.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int main() {
-    Store store = {NULL, 0, NULL, 0, 0.0};
-    mainMenu(&store);
-
-    // Очищення пам'яті
-    free(store.products);
-    free(store.employees);
-
+    Store store = {NULL, NULL, 0, 0, 0.0}; // Ініціалізація магазину
+    mainMenu(&store);                     // Виклик головного меню
     return 0;
 }
