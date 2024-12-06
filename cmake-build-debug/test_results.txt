@@ -1,0 +1,18 @@
+=== Running Tests ===
+Added product: Tablet
+Updated product: Laptop
+Removed product: Phone
+Sold 2 Headphones by Alice
+Set 10% discount on Laptop
+Auto restocked products
+=== Tests Completed ===
+=== Final State ===
+Products:
+Products in store:
+Name: Laptop, Price: 1260.00, Quantity: 7, Discount: 10.00%
+Name: Headphones, Price: 150.00, Quantity: 18, Discount: 0.00%
+Name: Tablet, Price: 1200.00, Quantity: 15, Discount: 0.00%
+Employees:
+Employees in store:
+Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 300.00
+Name: Bob, Salary: 2000.00, Role: Cashier, Total Sales: 0.00
