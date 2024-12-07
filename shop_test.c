@@ -1,48 +1,45 @@
+//Андріанова Маргарита Юріївна
+//Комп'ютерна математика 2
+
+/*
+ * shop_test.c
+ *
+ * Тестовий модуль програми.
+ * Містить функції для автоматизованого тестування всіх функцій модуля "shop".
+ * - Виконує перевірку сценаріїв додавання, оновлення, видалення продуктів та працівників.
+ * - Тестує функції продажів, знижок та поповнення запасів.
+ * - Записує результати тестування у файл "test_results.txt".
+ */
+
 #include "shop.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+// Оголошення функцій тестування
 void runTests(Store *store, const char *testFileName, const char *resultFileName);
 void loadTestDataFromFile(Store *store, const char *fileName);
 void addTestProducts(Store *store);
 void addTestEmployees(Store *store);
+void testAllFunctions(Store *store, FILE *resultFile);
 
 int main() {
-    // Ініціалізація структури Store
-    Store store = {NULL, NULL, 0, 0, 0.0};
+    Store store = {NULL, NULL, 0, 0, 0.0};  // Ініціалізація магазину
 
-    int inputMode;
     char testFileName[50];
-    char resultFileName[50] = "test_results.txt"; // Ім'я файлу з результатами тестування
+    char resultFileName[50] = "test_results.txt";  // Результати збережуться тут
 
-    printf("Select input mode:\n");
-    printf("1. Manual input\n");
-    printf("2. Load data from file\n");
-    printf("Enter your choice: ");
-    scanf("%d", &inputMode);
-    getchar(); // Очищення буфера
+    printf("Enter the filename to load test data (or press Enter to use default tests): ");
+    fgets(testFileName, sizeof(testFileName), stdin);
+    testFileName[strcspn(testFileName, "\n")] = '\0'; // Видалення символу нового рядка
 
-    if (inputMode == 1) {
-        printf("Manual input selected. Running manual tests...\n");
-        runTests(&store, NULL, resultFileName);
-    } else if (inputMode == 2) {
-        printf("Enter the filename to load test data (e.g., shop_test.dat): ");
-        fgets(testFileName, sizeof(testFileName), stdin);
-        testFileName[strcspn(testFileName, "\n")] = '\0'; // Видалення символа '\n'
-        printf("Loading test data from file '%s'...\n", testFileName);
-        runTests(&store, testFileName, resultFileName);
-    } else {
-        printf("Invalid choice. Exiting.\n");
-        return 1;
-    }
-
+    printf("Running automated tests...\n");
+    runTests(&store, testFileName[0] ? testFileName : NULL, resultFileName);
     printf("Test results saved to '%s'\n", resultFileName);
 
-    // Очистка пам'яті
+    // Очищення пам'яті
     free(store.products);
     free(store.employees);
-
     return 0;
 }
 
@@ -53,50 +50,64 @@ void runTests(Store *store, const char *testFileName, const char *resultFileName
         return;
     }
 
-    if (testFileName != NULL) {
+    fprintf(resultFile, "=== STARTING AUTOMATED TESTING ===\n");
+
+    if (testFileName) {
+        fprintf(resultFile, "Loading test data from file: %s\n", testFileName);
         loadTestDataFromFile(store, testFileName);
     } else {
+        fprintf(resultFile, "Adding default test data...\n");
         addTestProducts(store);
         addTestEmployees(store);
     }
 
-    // Тестові кейси
-    fprintf(resultFile, "=== Running Tests ===\n");
-
-    // Додавання продукту
-    addProduct(store, "Tablet", 1200.0, 15);
-    fprintf(resultFile, "Added product: Tablet\n");
-
-    // Оновлення продукту
-    updateProduct(store, "Laptop", 1400.0, 7);
-    fprintf(resultFile, "Updated product: Laptop\n");
-
-    // Видалення продукту
-    removeProduct(store, "Phone");
-    fprintf(resultFile, "Removed product: Phone\n");
-
-    // Продаж продукту
-    sellProduct(store, "Headphones", 2, "Alice");
-    fprintf(resultFile, "Sold 2 Headphones by Alice\n");
-
-    // Встановлення знижки
-    setDiscount(store, "Laptop", 10.0);
-    fprintf(resultFile, "Set 10%% discount on Laptop\n");
-
-    // Автоматичне поповнення запасів
-    autoRestock(store, 10);
-    fprintf(resultFile, "Auto restocked products\n");
-
-    fprintf(resultFile, "=== Tests Completed ===\n");
-
-    // Виведення результатів
-    fprintf(resultFile, "=== Final State ===\n");
-    fprintf(resultFile, "Products:\n");
-    displayProducts(store, resultFile);
-    fprintf(resultFile, "Employees:\n");
-    displayEmployees(store, resultFile);
+    testAllFunctions(store, resultFile);
+    fprintf(resultFile, "=== AUTOMATED TESTING COMPLETED ===\n");
 
     fclose(resultFile);
+}
+
+void testAllFunctions(Store *store, FILE *resultFile) {
+    // Тестування функцій
+    fprintf(resultFile, "Testing addProduct...\n");
+    addProduct(store, "Mouse", 25.0, 50);
+    displayProducts(store, resultFile);
+
+    fprintf(resultFile, "Testing updateProduct...\n");
+    updateProduct(store, "Mouse", 30.0, 45);
+    displayProducts(store, resultFile);
+
+    fprintf(resultFile, "Testing removeProduct...\n");
+    removeProduct(store, "Mouse");
+    displayProducts(store, resultFile);
+
+    fprintf(resultFile, "Testing addEmployee...\n");
+    addEmployee(store, "Charlie", 2500.0, "Technician");
+    displayEmployees(store, resultFile);
+
+    fprintf(resultFile, "Testing updateEmployee...\n");
+    updateEmployee(store, "Charlie", 2700.0);
+    displayEmployees(store, resultFile);
+
+    fprintf(resultFile, "Testing removeEmployee...\n");
+    removeEmployee(store, "Charlie");
+    displayEmployees(store, resultFile);
+
+    fprintf(resultFile, "Testing sellProduct...\n");
+    sellProduct(store, "Laptop", 2, "Alice");
+    displayProducts(store, resultFile);
+    displayEmployees(store, resultFile);
+
+    fprintf(resultFile, "Testing setDiscount...\n");
+    setDiscount(store, "Phone", 10.0);
+    displayProducts(store, resultFile);
+
+    fprintf(resultFile, "Testing autoRestock...\n");
+    autoRestock(store, 20);
+    displayProducts(store, resultFile);
+
+    fprintf(resultFile, "Testing displayProfit...\n");
+    displayProfit(store);
 }
 
 void loadTestDataFromFile(Store *store, const char *fileName) {
@@ -108,7 +119,7 @@ void loadTestDataFromFile(Store *store, const char *fileName) {
 
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        char type[20], name[50];
+        char name[50];
         double price, salary;
         int quantity;
         char role[20];
@@ -117,8 +128,6 @@ void loadTestDataFromFile(Store *store, const char *fileName) {
             addProduct(store, name, price, quantity);
         } else if (sscanf(line, "Employee: %49[^,], Salary: %lf, Role: %19s", name, &salary, role) == 3) {
             addEmployee(store, name, salary, role);
-        } else {
-            printf("Invalid line in test file: %s", line);
         }
     }
     fclose(file);

@@ -1,18 +1,53 @@
-=== Running Tests ===
-Added product: Tablet
-Updated product: Laptop
-Removed product: Phone
-Sold 2 Headphones by Alice
-Set 10% discount on Laptop
-Auto restocked products
-=== Tests Completed ===
-=== Final State ===
-Products:
+=== STARTING AUTOMATED TESTING ===
+Loading test data from file: D:\\Project_Shop_c\\shop_test.dat
+Testing addProduct...
 Products in store:
-Name: Laptop, Price: 1260.00, Quantity: 7, Discount: 10.00%
-Name: Headphones, Price: 150.00, Quantity: 18, Discount: 0.00%
-Name: Tablet, Price: 1200.00, Quantity: 15, Discount: 0.00%
-Employees:
+Name: Laptop, Price: 1500.00, Quantity: 5, Discount: 0.00%
+Name: Phone, Price: 800.00, Quantity: 10, Discount: 0.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Name: Mouse, Price: 25.00, Quantity: 50, Discount: 0.00%
+Testing updateProduct...
+Products in store:
+Name: Laptop, Price: 1500.00, Quantity: 5, Discount: 0.00%
+Name: Phone, Price: 800.00, Quantity: 10, Discount: 0.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Name: Mouse, Price: 30.00, Quantity: 45, Discount: 0.00%
+Testing removeProduct...
+Products in store:
+Name: Laptop, Price: 1500.00, Quantity: 5, Discount: 0.00%
+Name: Phone, Price: 800.00, Quantity: 10, Discount: 0.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Testing addEmployee...
 Employees in store:
-Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 300.00
+Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 0.00
 Name: Bob, Salary: 2000.00, Role: Cashier, Total Sales: 0.00
+Name: Charlie, Salary: 2500.00, Role: Technician, Total Sales: 0.00
+Testing updateEmployee...
+Employees in store:
+Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 0.00
+Name: Bob, Salary: 2000.00, Role: Cashier, Total Sales: 0.00
+Name: Charlie, Salary: 2700.00, Role: Technician, Total Sales: 0.00
+Testing removeEmployee...
+Employees in store:
+Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 0.00
+Name: Bob, Salary: 2000.00, Role: Cashier, Total Sales: 0.00
+Testing sellProduct...
+Products in store:
+Name: Laptop, Price: 1500.00, Quantity: 3, Discount: 0.00%
+Name: Phone, Price: 800.00, Quantity: 10, Discount: 0.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Employees in store:
+Name: Alice, Salary: 3000.00, Role: Manager, Total Sales: 3000.00
+Name: Bob, Salary: 2000.00, Role: Cashier, Total Sales: 0.00
+Testing setDiscount...
+Products in store:
+Name: Laptop, Price: 1500.00, Quantity: 3, Discount: 0.00%
+Name: Phone, Price: 720.00, Quantity: 10, Discount: 10.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Testing autoRestock...
+Products in store:
+Name: Laptop, Price: 1500.00, Quantity: 3, Discount: 0.00%
+Name: Phone, Price: 720.00, Quantity: 10, Discount: 10.00%
+Name: Headphones, Price: 150.00, Quantity: 20, Discount: 0.00%
+Testing displayProfit...
+=== AUTOMATED TESTING COMPLETED ===
