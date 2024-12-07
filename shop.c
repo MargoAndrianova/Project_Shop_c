@@ -361,6 +361,7 @@ void displayProfit(const Store *store) {
     printf("Total profit: %.2f\n", store->totalProfit);
 }
 
+//Встановлення знижки
 void setDiscount(Store* store, const char* productName, float discountPercentage) {
     if (discountPercentage < 0.0 || discountPercentage > 100.0) {
         printf("Invalid discount percentage. Must be between 0 and 100.\n");
@@ -378,6 +379,7 @@ void setDiscount(Store* store, const char* productName, float discountPercentage
     printf("Product '%s' not found in store.\n", productName);
 }
 
+//Перевірка наявності продуктів
 void displayOutOfStock(const Store *store) {
     int outOfStockCount = 0;
     printf("Out of stock products:\n");

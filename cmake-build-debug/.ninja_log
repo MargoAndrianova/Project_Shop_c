@@ -11,3 +11,9 @@
 21	113	7552649339882885	CMakeFiles/test.dir/shop_test.c.obj	bcf539e131352dcd
 26	138	7552649339932961	CMakeFiles/test.dir/shop.c.obj	f72c1c0ea434debf
 138	224	7552649341059342	test.exe	f4763a71121606bb
+13	97	7552659972838778	CMakeFiles/test.dir/shop_test.c.obj	bcf539e131352dcd
+19	124	7552659972893933	CMakeFiles/test.dir/shop.c.obj	f72c1c0ea434debf
+124	221	7552659973938561	test.exe	f4763a71121606bb
+4	83	7552661457944823	CMakeFiles/Project_Shop_c.dir/main.c.obj	afd3721f0511a41e
+9	131	7552661458000251	CMakeFiles/Project_Shop_c.dir/shop.c.obj	76baeeb062c0d9b1
+131	235	7552661459215260	Project_Shop_c.exe	5efe030acb194e94
